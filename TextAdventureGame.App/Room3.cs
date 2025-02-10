@@ -18,13 +18,15 @@ namespace TextAdventureGame.App
 
             if (choice == "1")
             {
-                // Restore health
                 Console.WriteLine("You feel refreshed!");
+                game.AddToInventory("Rested");
             }
             else
             {
-                game.LoseHeart();
+                Console.WriteLine("Your injuries and fatigue cause you to fall into a bed of hemlock. You die. Ouch!");
+                game.EndGame();
             }
         }
     }
+
 }

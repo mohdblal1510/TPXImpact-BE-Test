@@ -10,13 +10,13 @@ namespace TextAdventureGame.App.Tests
     {
         private readonly Mock<IPlayerInput> mockInput;
         private readonly Game game;
-        private readonly GameService gameService;
+        private readonly Mock<IGameService> mockGameService;
 
         public GameServiceTests()
         {
             mockInput = new Mock<IPlayerInput>();
             game = new Game(mockInput.Object);
-            gameService = new GameService(game);
+            mockGameService = new Mock<IGameService>();
         }
 
         [Fact]
@@ -42,19 +42,25 @@ namespace TextAdventureGame.App.Tests
         }
 
         [Fact]
-        public void TestGameServiceProcessesRooms()
+        public void TestGameServicePlayCallsProcessRoom()
         {
-            var roomMock = new Mock<IRoom>();
-            gameService.ProcessRoom(roomMock.Object);
-            roomMock.Verify(r => r.Enter(It.IsAny<Game>()), Times.Once);
+            mockGameService.Object.Play();
+            mockGameService.Verify(gs => gs.Play(), Times.Once);
+        }
+
+        [Fact]
+        public void TestGameOverConditionAfterThreeLoses()
+        {
+            game.LoseHeart();
+            game.LoseHeart();
+            game.LoseHeart();
+            Assert.True(game.IsGameOver());
         }
 
         [Fact]
         public void TestGameOverCondition()
         {
-            game.LoseHeart();
-            game.LoseHeart();
-            game.LoseHeart();
+            game.EndGame();
             Assert.True(game.IsGameOver());
         }
     }

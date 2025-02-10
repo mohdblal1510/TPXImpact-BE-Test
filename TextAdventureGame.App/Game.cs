@@ -28,5 +28,15 @@ namespace TextAdventureGame.App
         }
 
         public bool IsGameOver() => Hearts <= 0;
+
+        public void EndGame()
+        {
+            Hearts = 0;
+        }
+
+        public void AddToInventory(string item)
+        {
+            Inventory[item] = true;
+        }
     }
 }
