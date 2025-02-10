@@ -12,18 +12,12 @@ namespace TextAdventureGame.App.Services
         private readonly Game _game;
         private readonly Queue<IRoom> _rooms;
 
-        public GameService(Game game)
+        public GameService(Game game, IEnumerable<IRoom> rooms)
         {
             _game = game;
-            _rooms = new Queue<IRoom>(new List<IRoom>
-        {
-            new Room1(),
-            new Room2(),
-            new Room3(),
-            new Room4(),
-            new Room5()
-        });
+            _rooms = new Queue<IRoom>(rooms);
         }
+
 
         public void Play()
         {
